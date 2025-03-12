@@ -53,7 +53,7 @@ def main():
     print("Active effects: " + " → ".join([effect.__class__.__name__.replace("Effect", "") for effect in effects]))
 
     # Access webcam
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(1)
     if not cap.isOpened():
         print("Error: Could not open webcam.")
         sys.exit(1)

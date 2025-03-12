@@ -4505,3 +4505,98 @@ class RGBDebugEffect(Effect):
 
         return result
 
+@register_effect("camcorder")
+class CamcorderEffect(Effect):
+    """Create a vintage camcorder/VHS style effect with date stamp"""
+    def __init__(self, audio_manager=None):
+        super().__init__(audio_manager)
+        self.time = 0
+        self.last_tracking_glitch = 0
+        self.tracking_duration = 0
+        self.noise_texture = None
+        self.date_time = time.strftime("%Y/%m/%d %H:%M:%S", time.localtime())
+
+    def process(self, frame):
+        height, width = frame.shape[:2]
+
+        # Create noise texture if not already done
+        if self.noise_texture is None or self.noise_texture.shape[:2] != (height, width):
+            self.noise_texture = np.random.randint(0, 20, (height, width), dtype=np.uint8)
+
+        # Step 1: Apply slight blur for that old camcorder lens quality
+        result = cv2.GaussianBlur(frame, (3, 3), 0)
+
+        # Step 2: Reduce color depth (old camcorders had poor color reproduction)
+        result = result // 16 * 16
+
+        # Step 3: Adjust colors (increase contrast, reduce blue)
+        result = cv2.convertScaleAbs(result, alpha=1.2, beta=-10)
+        result[:,:,0] = np.clip(result[:,:,0] * 0.85, 0, 255).astype(np.uint8)  # Reduce blue channel
+
+        # Step 4: Add random tracking problems (horizontal noise lines)
+        if random.random() < 0.03 or (self.time - self.last_tracking_glitch < self.tracking_duration):
+            if self.time - self.last_tracking_glitch >= self.tracking_duration:
+                self.last_tracking_glitch = self.time
+                self.tracking_duration = random.randint(5, 15)
+
+            # Add horizontal tracking noise lines
+            num_lines = random.randint(2, 5)
+            for _ in range(num_lines):
+                y = random.randint(0, height - 1)
+                h = random.randint(1, 3)
+                if y + h < height:
+                    # White noise line or black line
+                    line_type = random.randint(0, 1)
+                    if line_type == 0:
+                        result[y:y+h, :] = np.random.randint(150, 255, (h, width, 3), dtype=np.uint8)
+                    else:
+                        result[y:y+h, :] = 0
+
+        # Step 5: Add slight RGB shift (analog signal degradation)
+        b, g, r = cv2.split(result)
+        r_shift = np.roll(r, random.randint(-2, 2), axis=1)
+        b_shift = np.roll(b, random.randint(-2, 2), axis=1)
+        result = cv2.merge([b_shift, g, r_shift])
+
+        # Step 6: Add film grain/noise
+        dynamic_noise = np.random.randint(0, 20, (height, width), dtype=np.uint8)
+        noise = (self.noise_texture * 0.5 + dynamic_noise * 0.5).astype(np.uint8)
+
+        # Apply noise to result
+        for c in range(3):
+            result[:, :, c] = cv2.add(result[:, :, c], noise)
+            result[:, :, c] = cv2.subtract(result[:, :, c], noise // 2)
+
+        # Step 7: Add occasional brightness flicker
+        if random.random() < 0.1:
+            flicker = random.uniform(0.9, 1.1)
+            result = cv2.convertScaleAbs(result, alpha=flicker, beta=0)
+
+        # Step 8: Add intermittent auto-focus effect
+        if random.random() < 0.01:
+            result = cv2.GaussianBlur(result, (7, 7), 0)
+
+        # Step 9: Add date/time stamp in corner (classic camcorder feature)
+        # Update date every 30 frames
+        if self.time % 30 == 0:
+            self.date_time = time.strftime("%Y/%m/%d %H:%M:%S", time.localtime())
+
+        # Draw date in yellow in bottom right corner with black outline
+        text_size = 0.5
+        text_pos = (width - 150, height - 20)
+        # Black outline
+        cv2.putText(result, self.date_time, (text_pos[0]-1, text_pos[1]-1),
+                    cv2.FONT_HERSHEY_SIMPLEX, text_size, (0, 0, 0), 2)
+        # Yellow text
+        cv2.putText(result, self.date_time, text_pos,
+                    cv2.FONT_HERSHEY_SIMPLEX, text_size, (0, 255, 255), 1)
+
+        # Step 10: Add slight vignette (darker corners)
+        mask = np.zeros((height, width), dtype=np.uint8)
+        center = (width // 2, height // 2)
+        cv2.ellipse(mask, center, (width//2, height//2), 0, 0, 360, 255, -1)
+        mask = cv2.GaussianBlur(mask, (width//8*2+1, height//8*2+1), 0)
+        result = result * (mask/255.0)[:,:,np.newaxis] + np.zeros_like(result) * (1 - (mask/255.0)[:,:,np.newaxis])
+
+        self.time += 1
+        return result.astype(np.uint8)
