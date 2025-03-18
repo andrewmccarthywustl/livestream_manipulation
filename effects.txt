@@ -4,7 +4,7 @@ Available Effects:
 original - Original image with no modifications
 grayscale - Convert image to grayscale
 edge - Detect and highlight edges
-cartoon - Apply cartoon-like effect #maybe the coolest thing ever if you point an external camera at the computer
+cartoon - Apply cartoon-like effect
 blur - Apply Gaussian blur
 sharpen - Sharpen the image
 emboss - Apply emboss effect
@@ -13,103 +13,20 @@ negative - Invert image colors
 pixelate - Pixelate the image
 
 --- Advanced Effects ---
-neon - Apply neon glow effect #just a slight saturation boost kinda mid
-vaporwave - Apply vaporwave aesthetic #good effect
-glitch - Apply digital glitch effect #ok
-thermal - Apply thermal camera effect #good effect for iradesence
-fisheye - Apply fisheye lens distortion #laggy looks like shit
+neon - Apply neon glow effect
+vaporwave - Apply vaporwave aesthetic
+glitch - Apply digital glitch effect
+thermal - Apply thermal camera effect
 mirror - Mirror the image horizontally
 
 --- Wild Effects ---
-cubism - Create cubism-inspired effect with geometric shapes #a cool effect, a lot tho
-starfield - Create a starfield/space warp effect #makes everything dark and has stars
-matrix - Create digital rain/matrix code effect
-
+cubism - Create cubism-inspired effect with geometric shapes
 dream - Create a dreamy, ethereal effect
-
-liquid - Create a flowing liquid-like distortion #no frame rate
-
-fractal_noise - Apply dynamic fractal noise pattern #alright effect a bunch of noise, a lot tho
-
-datamosh - Create digital datamoshing effect with motion frame corruption #out of focus squares flashing
-
-vhs - Create retro VHS tape distortion effect #doesnt work
-
-timedisplace - Create time displacement map effect
-
-chromakey - Psychedelic chroma key mirror effect #doesnt do anything
-
-
-
-
-neontrails - Create neon-colored motion trails #THE BEST ONE
-
-
-
-slice_shuffle - Cut the image into slices and shuffle them #ALOT
-
-fractalize - Create recursive image-within-image fractal effect
-
-solarize - Create psychedelic solarization effect #like temp but more interesting, only does certain things
-
-
-scanlines - Create CRT scanline effect with glitches #DOESNT WORK
-
-
-hologram - Create sci-fi hologram effect #Ok can work kinda well with cartoon
-
-
-dna - Create a DNA-like helix pattern from the image #WACK
-
-
+hologram - Create sci-fi hologram effect
 painterly - Create an artistic, painterly effect
-
-
-quantum - Create a quantum probability wave collapse effect #FRAME RATE IS GONE
-
-oil_painting - Create oil painting effect with dynamic texture #NO LOAD
-
-
-wigglevision - Create a wiggly, wobbly vision effect #LOW FRAMES
-
 cellular - Apply cellular automaton rules to create evolving patterns
-
-
-disintegrate - Create a particle disintegration effect
-hypnotic - Create mesmerizing hypnotic spiral patterns
-impressionist - Create an impressionist painting style effect
-symmetry - Create kaleidoscopic symmetry patterns
-warhol - Create a Warhol-inspired pop art effect
-chromadepth - Create depth perception using chromatic aberration
-reality_break - Complete reality-shattering psychedelic breakdown
-nightmare - Dark, unsettling visual distortion experience #laggy
-acid_trip - Intensely colorful, flowing visual hallucination
-dimension_rift - Creates a tear between dimensions with chaotic visuals
-chaos_theory - Cascading butterfly effect of visual chaos
-art_nouveau_lines - Create flowing, organic line patterns in Art Nouveau style
-mucha_portrait - Transform portrait in Alphonse Mucha style with ornamental borders
-stained_glass - Create Art Nouveau stained glass effect with flowing lead lines
-floral_frame - Apply decorative Art Nouveau floral frame
-anatomical_silhouette - Create an anatomical drawing effect with high-contrast colors and film grain
-
---- Audio-Responsive Effects ---
-pulse - Pulse the image based on audio volume
-color_pulse - Change colors based on audio intensity
-beat_flash - Flash the image on audio beats
-audio_glitch - Apply glitch effects based on audio
-equalizer - Display audio frequency spectrum as equalizer
-waveform - Display audio waveform overlay
-concert_visuals - High-performance concert-style visual effects
-laser_storm - High-performance laser light show effect
-liquid_color - Fluid, flowing color distortions that respond to audio levels
-fractal_zoom - Infinitely detailed patterns that slowly evolve and pulse with the music
-audio_particles - Colorful particles that burst and flow based on sound intensity
-wavefront - Ripple effects that emanate from performers or beat drops
-neon_tracers - Leaving colorful trails behind moving objects
-geometric_overlay - Sacred geometry patterns that float and transform with the music
-color_cycling - Gradual shifts through vibrant color spectrums
-rgb_shift_audio - RGB channel shifting effect that reacts to audio intensity
-rgb_shift_extreme - Extreme RGB channel shifting effect that reacts to audio intensity
-rgb_scatter - RGB channels scatter in different directions based on audio #goated
-rgb_directional - RGB shift with channels moving in specific directions based on audio volume
-rgb_debug - RGB shift with visual debug information for audio levels
+solarize - Create psychedelic solarization effect
+kaleidoscope - Create kaleidoscope effect
+rgb_scatter - RGB channels scatter in different directions
+rgb_directional - RGB shift with channels moving in specific directions
+rgb_shift_extreme - Extreme RGB channel shifting effect
