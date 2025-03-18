@@ -4,9 +4,10 @@ import threading
 import time
 
 class AudioManager:
-    def __init__(self):
+    def __init__(self, input_device_index=None):
         self.running = False
         self.thread = None
+        self.input_device_index = input_device_index
         self.audio_data = {
             "volume": 0,
             "peak_volume": 0,
@@ -44,6 +45,7 @@ class AudioManager:
                         channels=CHANNELS,
                         rate=RATE,
                         input=True,
+                        input_device_index=self.input_device_index,
                         frames_per_buffer=CHUNK)
 
             # Volume history for beat detection
