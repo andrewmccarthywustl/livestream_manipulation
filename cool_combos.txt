@@ -1,0 +1,23 @@
+#cartoon effect when pointing at laptop screen, want to have camera at Tv, shutter priority, found that the light adjustments are the best and not too crazy
+
+NORMAL
+python app.py -e cartoon
+
+RAINBOW PATTERNS, COOL EFFECTS AT DIFFERENT SHUTTER SPEEDS
+python app.py -e cartoon,solarize
+
+RAINBOW PATTERNS, COOL EFFECTS AT DIFFERENT SHUTTER SPEEDS, even a little crazier, with holographic type
+python app.py -e cartoon,solarize,vaporwave
+
+SICK BLACK AND WHITE EFFECT
+python app.py -e cartoon,edge
+
+CAN Do some cool things if you have some faster movements, got some really cool effects, isnt infinite and harder to setup
+python app.py -e edge
+
+PAINTERLY ADDS SOME EXTRA WAVE LIKE LINES MAKES IT FEEL MORE ORGANIC TBH
+python app.py -e cartoon,painterly
+
+Cellular is kinda cool when paired with cartoon
+python app.py -e cartoon,cellular
+

@@ -50,15 +50,31 @@ slice_shuffle - Cut the image into slices and shuffle them #ALOT
 
 fractalize - Create recursive image-within-image fractal effect
 
-solarize - Create psychedelic solarization effect
-scanlines - Create CRT scanline effect with glitches
-hologram - Create sci-fi hologram effect
-dna - Create a DNA-like helix pattern from the image
+solarize - Create psychedelic solarization effect #like temp but more interesting, only does certain things
+
+
+scanlines - Create CRT scanline effect with glitches #DOESNT WORK
+
+
+hologram - Create sci-fi hologram effect #Ok can work kinda well with cartoon
+
+
+dna - Create a DNA-like helix pattern from the image #WACK
+
+
 painterly - Create an artistic, painterly effect
-quantum - Create a quantum probability wave collapse effect
-oil_painting - Create oil painting effect with dynamic texture
-wigglevision - Create a wiggly, wobbly vision effect
+
+
+quantum - Create a quantum probability wave collapse effect #FRAME RATE IS GONE
+
+oil_painting - Create oil painting effect with dynamic texture #NO LOAD
+
+
+wigglevision - Create a wiggly, wobbly vision effect #LOW FRAMES
+
 cellular - Apply cellular automaton rules to create evolving patterns
+
+
 disintegrate - Create a particle disintegration effect
 hypnotic - Create mesmerizing hypnotic spiral patterns
 impressionist - Create an impressionist painting style effect
