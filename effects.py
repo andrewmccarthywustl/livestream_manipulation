@@ -635,3 +635,99 @@ class RGBShiftExtremeEffect(Effect):
 
         self.time += 1
         return result
+
+@register_effect("neontrails")
+class NeonTrailsEffect(Effect):
+    """Create neon-colored motion trails"""
+    def __init__(self):
+        super().__init__()
+        self.prev_frames = []
+        self.max_trails = 15
+
+    def process(self, frame):
+        # Add current frame to history
+        self.prev_frames.append(frame.copy())
+        if len(self.prev_frames) > self.max_trails:
+            self.prev_frames.pop(0)
+
+        # Start with black background
+        result = np.zeros_like(frame)
+
+        # Blend frames with different colors
+        num_frames = len(self.prev_frames)
+        for i, past_frame in enumerate(self.prev_frames):
+            # Weight based on recency
+            weight = (i + 1) / num_frames
+
+            # Convert to HSV
+            hsv = cv2.cvtColor(past_frame, cv2.COLOR_BGR2HSV)
+
+            # Assign hue based on frame position
+            hue = int((i * 180 / num_frames) % 180)
+            hsv[:, :, 0] = hue
+
+            # Increase saturation
+            hsv[:, :, 1] = np.clip(hsv[:, :, 1] * 1.5, 0, 255).astype(np.uint8)
+
+            # Convert back to BGR
+            colored = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
+
+            # Add to result with weight
+            cv2.addWeighted(result, 1.0, colored, weight, 0, result)
+
+        return result
+
+@register_effect("graytrails")
+class GrayTrailsEffect(Effect):
+    """Create colorful neon trails that follow motion"""
+    def __init__(self):
+        super().__init__()
+        self.prev_frame = None
+        self.trails = None
+        self.colors = None
+
+    def process(self, frame):
+        height, width = frame.shape[:2]
+
+        # Initialize on first frame
+        if self.prev_frame is None:
+            self.prev_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            self.trails = np.zeros((height, width, 3), dtype=np.float32)
+            self.colors = np.random.randint(0, 255, (height, width, 3), dtype=np.uint8)
+            return frame
+
+        # Convert current frame to grayscale
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+        # Calculate absolute difference to detect motion
+        diff = cv2.absdiff(gray, self.prev_frame)
+        _, motion = cv2.threshold(diff, 25, 1, cv2.THRESH_BINARY)
+
+        # Dilate motion mask
+        kernel = np.ones((5, 5), np.uint8)
+        motion = cv2.dilate(motion, kernel, iterations=1)
+
+        # Update trails (decay existing, add new motion)
+        self.trails *= 0.8  # Decay factor
+
+        # Add new motion to trails with colors
+        for c in range(3):
+            self.trails[:, :, c] += motion * self.colors[:, :, c]
+
+        # Occasionally rotate color palette for psychedelic effect
+        if random.random() < 0.05:
+            hsv = cv2.cvtColor(self.colors, cv2.COLOR_BGR2HSV)
+            hsv[:, :, 0] = (hsv[:, :, 0] + 10) % 180
+            self.colors = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
+
+        # Combine original frame with trails
+        result = frame.copy()
+        trails_uint8 = np.clip(self.trails, 0, 255).astype(np.uint8)
+        mask = np.max(trails_uint8, axis=2) > 0
+        mask_3d = np.repeat(mask[:, :, np.newaxis], 3, axis=2)
+        result[mask_3d] = cv2.addWeighted(result, 0.5, trails_uint8, 0.5, 0)[mask_3d]
+
+        # Update previous frame
+        self.prev_frame = gray
+
+        return result

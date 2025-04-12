@@ -30,3 +30,5 @@ kaleidoscope - Create kaleidoscope effect
 rgb_scatter - RGB channels scatter in different directions
 rgb_directional - RGB shift with channels moving in specific directions
 rgb_shift_extreme - Extreme RGB channel shifting effect
+neontrails - Create colorful neon trails that follow motion
+neontrails - Create colorful gray trails that follow motion
