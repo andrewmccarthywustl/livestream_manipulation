@@ -1,7 +1,5 @@
 # Livestream Manipulation
 
-# Audio Responsive Video Editor
-
 In live time, either using webcam or external camera, this script processes an input video applies visual effects to the segments (changing effect parameters per segment).
 
 ## Features
